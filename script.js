@@ -1,17 +1,14 @@
-//your JS code here. If required.
-const sounds = ['applause', 'boo', 'gasp', 'tada', 'victory', 'wrong'];
-
-const buttons = document.querySelectorAll('.btn');
+const soundNames = ['applause', 'boo', 'gasp', 'tada', 'victory', 'wrong'];
 let currentAudio = null;
 
-// Play sound
-buttons.forEach(btn => {
-	btn.addEventListener('click', () => {
-		const soundName = btn.textContent.trim();
-		if (soundName === 'stop') {
+document.querySelectorAll('.btn').forEach(btn => {
+	btn.addEventListener('click', function() {
+		const name = btn.dataset.sound;
+		if (btn.classList.contains('stop')) {
 			if (currentAudio) {
 				currentAudio.pause();
 				currentAudio.currentTime = 0;
+				currentAudio = null;
 			}
 			return;
 		}
@@ -19,7 +16,8 @@ buttons.forEach(btn => {
 			currentAudio.pause();
 			currentAudio.currentTime = 0;
 		}
-		currentAudio = new Audio(`./sounds/${soundName}.mp3`);
+		currentAudio = document.getElementById(name);
+		currentAudio.currentTime = 0;
 		currentAudio.play();
 	});
 });
